@@ -1,8 +1,8 @@
 {
     "enabled": true,
     "acf": {
-        "icao": "B736",
-        "author": "Alex Unruh"
+        "icao": "B733",
+        "author": "IXEG International X-Plane Development Group"
     },
     "speed": {
         "taxi": 30
@@ -150,17 +150,9 @@
             "name": "Approach speed",
             "requirements": [
                 {
-                    "name": "Vref not set",
-                    "type": 2,
-                    "primaryCondition": "$laminar/B738/FMS/vref > 50",
-                    "beginConditionMarker": "#CH",
-                    "endConditionMarker": "#TD-3000ms",
-                    "description": "Approach VREF should be set in the CDU"
-                },
-                {
                     "name": "Approach speed",
                     "type": 2,
-                    "primaryCondition": "($laminar/B738/FMS/vref - 3) <= $sim/cockpit2/gauges/indicators/airspeed_kts_pilot\nand\n($laminar/B738/FMS/vref + 20) >= $sim/cockpit2/gauges/indicators/airspeed_kts_pilot",
+                    "primaryCondition": "($sim/cockpit/autopilot/airspeed - 8) <= $sim/cockpit2/gauges/indicators/airspeed_kts_pilot\nand\n($sim/cockpit/autopilot/airspeed + 15) >= $sim/cockpit2/gauges/indicators/airspeed_kts_pilot",
                     "beginConditionMarker": "#CH",
                     "endConditionMarker": "$.ft_ARTE < 100",
                     "tolerance": 3000,
@@ -169,7 +161,7 @@
                 {
                     "name": "Approach speed",
                     "type": 1,
-                    "primaryCondition": "($laminar/B738/FMS/vref ) <= $sim/cockpit2/gauges/indicators/airspeed_kts_pilot\nand\n($laminar/B738/FMS/vref + 15) >= $sim/cockpit2/gauges/indicators/airspeed_kts_pilot",
+                    "primaryCondition": "($sim/cockpit/autopilot/airspeed - 5) <= $sim/cockpit2/gauges/indicators/airspeed_kts_pilot\nand\n($sim/cockpit/autopilot/airspeed + 10) >= $sim/cockpit2/gauges/indicators/airspeed_kts_pilot",
                     "beginConditionMarker": "#CH",
                     "endConditionMarker": "$.ft_ARTE < 100",
                     "tolerance": 3000,
@@ -236,7 +228,7 @@
                 {
                     "name": "Gear not down",
                     "type": 2,
-                    "primaryCondition": "$sim/cockpit2/controls/gear_handle_down == 1\nand\n$sim/cockpit2/annunciators/gear_unsafe == 0\n",
+                    "primaryCondition": "$sim/cockpit2/controls/gear_handle_down == 1 and $sim/cockpit2/annunciators/gear_unsafe == 0",
                     "beginConditionMarker": "#CH",
                     "endConditionMarker": "#TAXI",
                     "description": "Gear must be down and locked\nbelow check height"
@@ -262,7 +254,7 @@
                 {
                     "name": "Speedbrake not armed",
                     "type": 2,
-                    "primaryCondition": "$laminar/B738/annunciator/speedbrake_armed > 0.1 and\n$laminar/B738/annunciator/speedbrake_extend = 0",
+                    "primaryCondition": "$sim/cockpit2/controls/speedbrake_ratio < -0.4",
                     "beginConditionMarker": "#CH",
                     "endConditionMarker": "#TD-3000ms",
                     "secondaryCondition": "$analysis.rollout.go_around == 0",
@@ -273,27 +265,12 @@
             ]
         },
         {
-            "requirements": [
-                {
-                    "name": "Engine start switches CONT",
-                    "type": 2,
-                    "primaryCondition": "($laminar/B738/engine/starter1_pos == 2 or\n$laminar/B738/engine/starter1_pos == 3) and\n($laminar/B738/engine/starter2_pos == 2 or\n$laminar/B738/engine/starter2_pos == 3)",
-                    "beginConditionMarker": "#CH",
-                    "endConditionMarker": "#TAXI",
-                    "secondaryCondition": "$laminar/B738/engine_start_auto != 1",
-                    "secondaryConditionMarker": "#CH",
-                    "tolerance": 500,
-                    "description": "Engine start switches must be in position\nCONT below check height"
-                }
-            ]
-        },
-        {
             "name": "Autoflight",
             "requirements": [
                 {
                     "name": "Autoland",
                     "type": 0,
-                    "primaryCondition": "$laminar/autopilot/ap_on == 0",
+                    "primaryCondition": "$ixeg/733/RA/AFDS/autopilot_on == 1",
                     "beginConditionMarker": "#TD-3000ms",
                     "endConditionMarker": "#TD+3000ms",
                     "description": "Information only: Autoland"
@@ -301,24 +278,10 @@
                 {
                     "name": "Autopilot engaged",
                     "type": 0,
-                    "primaryCondition": "$laminar/autopilot/ap_on == 0",
+                    "primaryCondition": "$ixeg/733/RA/AFDS/autopilot_on == 1",
                     "beginConditionMarker": "#CH",
                     "endConditionMarker": "#TD-3000ms",
                     "tolerance": 1000
-                }
-            ]
-        },
-        {
-            "name": "Thrust",
-            "requirements": [
-                {
-                    "name": "High/Low thrust",
-                    "type": 1,
-                    "primaryCondition": "$laminar/B738/engine/indicators/N1_percent_1 > 40 and\n$laminar/B738/engine/indicators/N1_percent_1 < 80",
-                    "beginConditionMarker": "#CH",
-                    "endConditionMarker": "$.ft_ARTE < 100",
-                    "tolerance": 5000,
-                    "description": "Appropriate thrust settings is required.\nRecommended: 40-80% N1 below check height until flare begins"
                 }
             ]
         },
