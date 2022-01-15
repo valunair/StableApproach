@@ -6,7 +6,7 @@
   "va":{
     "report_server":{
       "enabled": true,
-      "host": "develop.lunair.fr",
+      "host": "crew.lunair.fr",
       "target": "/dstable"
     },
     "aircraft_profiles":{
