@@ -1,8 +1,8 @@
 {
     "enabled": true,
     "acf": {
-        "icao": "CL60",
-        "author": "Hot Start"
+        "icao": "B463",
+        "author": "Just Flight / Thranda Design"
     },
     "speed": {
         "taxi": 30
@@ -13,7 +13,7 @@
         {
             "name": "IMC",
             "height": 1000,
-            "primaryCondition": "$sim/weather/visibility_reported_m < 5000 or\n((($sim/weather/cloud_base_msl_m[0] - $analysis.touchdown_combined.elevation) < 450) and $sim/weather/cloud_coverage[0] >= 4)",
+            "primaryCondition": "$sim/weather/visibility_reported_m < 5000 or ((($sim/weather/cloud_base_msl_m[0] - $analysis.touchdown_combined.elevation) < 450) and $sim/weather/cloud_coverage[0] >= 4)",
             "description": "Instrument approach in IMC conditions"
         },
         {
@@ -26,7 +26,7 @@
             "name": "VISUAL",
             "height": 500,
             "primaryCondition": "0",
-            "description": "Visual approach can only be selected manually\n\nPlugins -> StableApproach -> Check height"
+            "description": "Visual approach can only be selected manually\nPlugins -> StableApproach -> Check height"
         }
     ],
     "requirementGroups": [
@@ -39,7 +39,7 @@
                     "primaryCondition": "$analysis.rollout.rwy_remaining > 0",
                     "beginConditionMarker": "#TD_FIRST",
                     "endConditionMarker": "$clamb/stableapproach/position/groundspeed_kn < 60",
-                    "description": "Taxi speed when reaching end of runway\n"
+                    "description": "Taxi speed when reaching end of runway "
                 }
             ]
         },
@@ -90,7 +90,7 @@
                     "primaryCondition": "$analysis.touchdown_combined.fpm_agl.max > -900",
                     "beginConditionMarker": "#CH",
                     "endConditionMarker": "#TAXI",
-                    "description": "Maximum sinkrate during touchdown:\n600 fpm"
+                    "description": "Maximum sinkrate during touchdown: 600 fpm"
                 },
                 {
                     "name": "Hard landing (fpm)",
@@ -98,7 +98,7 @@
                     "primaryCondition": "$analysis.touchdown_combined.fpm_agl.max > -600",
                     "beginConditionMarker": "#CH",
                     "endConditionMarker": "#TAXI",
-                    "description": "Maximum sinkrate during touchdown:\n600 fpm"
+                    "description": "Maximum sinkrate during touchdown: 600 fpm"
                 }
             ]
         },
@@ -111,7 +111,7 @@
                     "primaryCondition": "$analysis.touchdown_combined.g_vertical.max < 2.6",
                     "beginConditionMarker": "#CH",
                     "endConditionMarker": "#TAXI",
-                    "description": "Max vertical acceleration after touchdown:\n2.1 G"
+                    "description": "Max vertical acceleration after touchdown: 2.1 G"
                 },
                 {
                     "name": "Hard landing (g)",
@@ -119,7 +119,7 @@
                     "primaryCondition": "$analysis.touchdown_combined.g_vertical.max < 2.1",
                     "beginConditionMarker": "#CH",
                     "endConditionMarker": "#TAXI",
-                    "description": "Max vertical acceleration after touchdown:\n2.1 G"
+                    "description": "Max vertical acceleration after touchdown: 2.1 G"
                 }
             ]
         },
@@ -129,20 +129,20 @@
                 {
                     "name": "High sinkrate",
                     "type": 2,
-                    "primaryCondition": "if ($clamb/stableapproach/live/app/gs/type != 6)\n$sim/flightmodel/position/vh_ind_fpm > -1300;\nelse\n$sim/flightmodel/position/vh_ind_fpm >\n$clamb/stableapproach/live/app/gs/angle / 3 * -1300",
+                    "primaryCondition": "$sim/flightmodel/position/vh_ind_fpm > -1300",
                     "beginConditionMarker": "#CH",
                     "endConditionMarker": "#TD_LAST",
                     "tolerance": 3000,
-                    "description": "Max sinkrate during approach is normally:\n1000fpm"
+                    "description": "Max sinkrate during approach is normally: 1000fpm"
                 },
                 {
                     "name": "High sinkrate",
                     "type": 1,
-                    "primaryCondition": "if ($clamb/stableapproach/live/app/gs/type != 6)\n$sim/flightmodel/position/vh_ind_fpm > -1100;\nelse\n$sim/flightmodel/position/vh_ind_fpm >\n$clamb/stableapproach/live/app/gs/angle / 3 * -1100",
+                    "primaryCondition": "$sim/flightmodel/position/vh_ind_fpm > -1100",
                     "beginConditionMarker": "#CH",
                     "endConditionMarker": "#TAXI",
                     "tolerance": 3000,
-                    "description": "Max sinkrate during approach is normally:\n1000fpm"
+                    "description": "Max sinkrate during approach is normally: 1000fpm"
                 }
             ]
         },
@@ -168,7 +168,7 @@
                     "primaryCondition": "abs ($sim/cockpit/radios/nav1_vdef_dot) < 1.3",
                     "beginConditionMarker": "#CH",
                     "endConditionMarker": "$.ft_ARTE < 200",
-                    "secondaryCondition": "$analysis.app.nav.gs.type == 6 and\n$.not_vis_app",
+                    "secondaryCondition": "$analysis.app.nav.gs.type == 6 and $.not_vis_app",
                     "secondaryConditionMarker": "#TD-3000ms",
                     "tolerance": 2000,
                     "description": "Maximum 1 dot glideslope deviation.\nFrom check height until 200ft above runway threshold elevation (ARTE).\nNot required for VISUAL approaches"
@@ -179,7 +179,7 @@
                     "primaryCondition": "abs($sim/cockpit/radios/nav1_vdef_dot) < 1",
                     "beginConditionMarker": "#CH",
                     "endConditionMarker": "$.ft_ARTE < 200",
-                    "secondaryCondition": "$analysis.app.nav.gs.type == 6 and\n$.not_vis_app",
+                    "secondaryCondition": "$analysis.app.nav.gs.type == 6 and $.not_vis_app",
                     "secondaryConditionMarker": "#TD-3000ms",
                     "description": "Maximum 1 dot glideslope deviation.\nFrom check height until 200ft above runway threshold elevation (ARTE).\nNot required for VISUAL approaches"
                 }
@@ -194,10 +194,10 @@
                     "primaryCondition": "abs($sim/cockpit/radios/nav1_hdef_dot) < 1.3",
                     "beginConditionMarker": "#CH",
                     "endConditionMarker": "#TD-3000ms",
-                    "secondaryCondition": "$analysis.app.nav.loc.type != 0 and\n$.not_vis_app",
+                    "secondaryCondition": "$analysis.app.nav.loc.type != 0 and $.not_vis_app",
                     "secondaryConditionMarker": "#TD-3000ms",
                     "tolerance": 2000,
-                    "description": "Maximum 1 dot localizer deviation\nfrom check height till touchdown.\nNot required for VISUAL approaches"
+                    "description": "Maximum 1 dot localizer deviation from check height till touchdown.\nNot required for VISUAL approaches"
                 },
                 {
                     "name": "Localizer deviation",
@@ -205,10 +205,10 @@
                     "primaryCondition": "abs($sim/cockpit/radios/nav1_hdef_dot) < 1",
                     "beginConditionMarker": "#CH",
                     "endConditionMarker": "#TD-3000ms",
-                    "secondaryCondition": "$analysis.app.nav.loc.type != 0 and\n$.not_vis_app",
+                    "secondaryCondition": "$analysis.app.nav.loc.type != 0 and $.not_vis_app",
                     "secondaryConditionMarker": "#TD-3000ms",
                     "tolerance": 2000,
-                    "description": "Maximum 1 dot localizer deviation\nfrom check height till touchdown.\nNot required for VISUAL approaches"
+                    "description": "Maximum 1 dot localizer deviation from check height till touchdown.\nNot required for VISUAL approaches"
                 }
             ]
         },
@@ -218,10 +218,10 @@
                 {
                     "name": "Gear not down",
                     "type": 2,
-                    "primaryCondition": "$CL650/fo_state/gear_dn_all == 1\n",
+                    "primaryCondition": "$sim/flightmodel2/gear/deploy_ratio == 1",
                     "beginConditionMarker": "#CH",
                     "endConditionMarker": "#TAXI",
-                    "description": "Gear must be down and locked\nbelow check height"
+                    "description": "Gear must be down below check height"
                 }
             ]
         },
@@ -231,73 +231,10 @@
                 {
                     "name": "Flaps not in position",
                     "type": 2,
-                    "primaryCondition": "$CL650/fo_state/flaps_ind == 45",
-                    "beginConditionMarker": "#CH",
-                    "endConditionMarker": "$sim/cockpit2/gauges/indicators/airspeed_kts_pilot < 60",
-                    "description": "Flaps must be in landing position (30/40) below check height until taxi speed"
-                }
-            ]
-        },
-        {
-            "name": "Speedbrake",
-            "requirements": [
-                {
-                    "name": "Speedbrake not armed",
-                    "type": 2,
-                    "primaryCondition": "$CL650/pedestal/gnd_spoilers == 1",
-                    "beginConditionMarker": "#CH",
-                    "endConditionMarker": "#TD-3000ms",
-                    "secondaryCondition": "$analysis.rollout.go_around == 0",
-                    "secondaryConditionMarker": "#TD-3000ms",
-                    "tolerance": 500,
-                    "description": "Speedbrakes must be in the ARMED position\nbelow check height.\nNot required in case of touch-and-go"
-                }
-            ]
-        },
-		{
-            "name": "REV armed",
-            "requirements": [
-                {
-                    "name": "Reversers not armed",
-                    "type": 2,
-                    "primaryCondition": "$CL650/pedestal/thr_rev/arm_R == 1 and $CL650/pedestal/thr_rev/arm_L == 1",
-                    "beginConditionMarker": "#CH",
-                    "endConditionMarker": "#TD-3000ms",
-                    "secondaryCondition": "$analysis.rollout.go_around == 0",
-                    "secondaryConditionMarker": "#TD-3000ms",
-                    "tolerance": 500,
-                    "description": "Reversers must be ARMED\nbelow check height.\nNot required in case of touch-and-go"
-                }
-            ]
-        },
-		{
-            "name": "Anti-skid",
-            "requirements": [
-                {
-                    "name": "Anti-skid not armed",
-                    "type": 2,
-                    "primaryCondition": "$CL650/pedestal/gear/anti_skid == 1",
-                    "beginConditionMarker": "#CH",
-                    "endConditionMarker": "#TD-3000ms",
-                    "secondaryCondition": "$analysis.rollout.go_around == 0",
-                    "secondaryConditionMarker": "#TD-3000ms",
-                    "tolerance": 500,
-                    "description": "Anti-skid must be ARMED\nbelow check height.\nNot required in case of touch-and-go"
-                }
-            ]
-        },
-        {
-			"name": "Ignition not on",
-            "requirements": [
-                {
-                    "name": "Ignition",
-                    "type": 2,
-                    "primaryCondition": "$CL650/overhead/ign/cont_value == 1",
+                    "primaryCondition": "$sim/cockpit2/controls/flap_ratio > 0.95 or ($sim/cockpit2/controls/flap_ratio >= 0.745 and $sim/cockpit2/controls/flap_ratio <= 0.755)",
                     "beginConditionMarker": "#CH",
                     "endConditionMarker": "#TAXI",
-                    "secondaryConditionMarker": "#CH",
-                    "tolerance": 500,
-                    "description": "Ignition must be ON below check height"
+                    "description": "Flaps must be in landing position (30 or 33) below check height until taxi speed"
                 }
             ]
         },
@@ -307,7 +244,7 @@
                 {
                     "name": "Autoland",
                     "type": 0,
-                    "primaryCondition": "$CL650/FCP/ap_eng_value == 0",
+                    "primaryCondition": "$sim/cockpit/autopilot/autopilot_mode != 2",
                     "beginConditionMarker": "#TD-3000ms",
                     "endConditionMarker": "#TD+3000ms",
                     "description": "Information only: Autoland"
@@ -315,11 +252,11 @@
                 {
                     "name": "Autopilot engaged",
                     "type": 0,
-                    "primaryCondition": "$CL650/FCP/ap_eng_value == 0",
+                    "primaryCondition": "$sim/cockpit/autopilot/autopilot_mode != 2",
                     "beginConditionMarker": "#CH",
                     "endConditionMarker": "#TD-3000ms",
-					"description": "Information only: Autopilot used during approach",
-                    "tolerance": 1000
+                    "tolerance": 1000,
+                    "description": "Information only: Autopilot Engaged"
                 }
             ]
         },
@@ -333,7 +270,7 @@
                     "beginConditionMarker": "$.ft_ARTE < 50",
                     "endConditionMarker": "#TD_LAST",
                     "tolerance": 1000,
-                    "description": "Tailwind on runway was above 10kn.\nMake the opposite runway would be more suitable."
+                    "description": "Tailwind on runway was above 10kn.\nThe opposite runway might be more suitable."
                 }
             ]
         }
