@@ -134,7 +134,7 @@
                 },
                 {
                     "name": "Hard landing (g)",
-                    "type": 2,
+                    "type": 1,
                     "primaryCondition": "$analysis.touchdown_combined.g_vertical.max < 2.1",
                     "beginConditionMarker": "#CH",
                     "endConditionMarker": "#TAXI",
@@ -148,7 +148,7 @@
                 {
                     "name": "High sinkrate",
                     "type": 2,
-                    "primaryCondition": "if ($clamb/stableapproach/live/app/gs/type != 6) $sim/flightmodel/position/vh_ind_fpm > -1300; else $sim/flightmodel/position/vh_ind_fpm > $clamb/stableapproach/live/app/gs/angle / 3 * -1300",
+                    "primaryCondition": "if ($clamb/stableapproach/live/app/gs/type != 6) $sim/flightmodel/position/vh_ind_fpm > -1300; else $sim/flightmodel/position/vh_ind_fpm > clamp(3,$clamb/stableapproach/live/app/gs/angle ,8) / 3 * -1300",
                     "beginConditionMarker": "#CH",
                     "endConditionMarker": "#TD_LAST",
                     "tolerance": 3000,
@@ -157,7 +157,7 @@
                 {
                     "name": "High sinkrate",
                     "type": 1,
-                    "primaryCondition": "if ($clamb/stableapproach/live/app/gs/type != 6) $sim/flightmodel/position/vh_ind_fpm > -1100; else $sim/flightmodel/position/vh_ind_fpm > $clamb/stableapproach/live/app/gs/angle / 3 * -1100",
+                    "primaryCondition": "if ($clamb/stableapproach/live/app/gs/type != 6)\n$sim/flightmodel/position/vh_ind_fpm > -1100;\nelse\n$sim/flightmodel/position/vh_ind_fpm >\nclamp(3,$clamb/stableapproach/live/app/gs/angle ,8) / 3 * -1100",
                     "beginConditionMarker": "#CH",
                     "endConditionMarker": "#TAXI",
                     "tolerance": 3000,
@@ -168,6 +168,14 @@
         {
             "name": "Approach speed",
             "requirements": [
+			    {
+                    "name": "Vapp not set",
+                    "type": 2,
+                    "primaryCondition": "$Rotate/aircraft/systems/fms_data_vapp#0 > 50",
+                    "beginConditionMarker": "#CH",
+                    "endConditionMarker": "#TD-3000ms",
+                    "description": "Set/confirm Vapp in FMC/CDU"
+                },
                 {
                     "name": "Approach speed",
                     "type": 2,
@@ -175,7 +183,7 @@
                     "beginConditionMarker": "#CH",
                     "endConditionMarker": "$.ft_ARTE < 100",
                     "tolerance": 3000,
-                    "description": "Speed during approach must be between:\nVREF and VREF +15"
+                    "description": "Speed during approach must be between:\nVapp -5 and Vapp +10"
                 },
                 {
                     "name": "Approach speed",
@@ -184,7 +192,7 @@
                     "beginConditionMarker": "#CH",
                     "endConditionMarker": "$.ft_ARTE < 100",
                     "tolerance": 3000,
-                    "description": "Speed during approach must be between:\nVREF and VREF +15"
+                    "description": "Speed during approach must be between:\nVapp -5 and Vapp +10"
                 }
             ]
         },
@@ -303,7 +311,7 @@
                 {
                     "name": "Autoland",
                     "type": 0,
-                    "primaryCondition": "$Rotate/aircraft/controls/fgs_appr_land == 1",
+                    "primaryCondition": "$Rotate/aircraft/controls/fgs_autoflight == 0",
                     "beginConditionMarker": "#TD-3000ms",
                     "endConditionMarker": "#TD+3000ms",
                     "description": "Information only: Autoland"
@@ -311,7 +319,7 @@
                 {
                     "name": "Autopilot engaged",
                     "type": 0,
-                    "primaryCondition": "$Rotate/aircraft/controls/fgs_autoflight == 1",
+                    "primaryCondition": "$Rotate/aircraft/controls/fgs_autoflight == 0",
                     "beginConditionMarker": "#CH",
                     "endConditionMarker": "#TD-3000ms",
                     "tolerance": 1000,
